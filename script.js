@@ -9,22 +9,20 @@ function getComputerChoice() {
 }
 
 function playRound(playerSelection, computerSelection) {
-    console.log(`You play: ${playerSelection}`);
 
     if (HAND_CHOICES.includes(playerSelection)) {
-        console.log(`Computer plays: ${computerSelection}`);
 
         if (playerSelection === computerSelection) {
-            console.log("Tie!");
+            return "Tie!";
         } else if((HAND_CHOICES.indexOf(playerSelection) + 2) % 3 === HAND_CHOICES.indexOf(computerSelection)) {
-            console.log("You win!");
+            return  `You win! ${playerSelection} beats ${computerSelection}!`;
         } else if((HAND_CHOICES.indexOf(playerSelection) + 1) % 3 === HAND_CHOICES.indexOf(computerSelection)) {
-            console.log("You lose!");
+            return `You lose! ${computerSelection} beats ${playerSelection}!`;
         }
     } else {
-        console.log("Unknown hand...");
+        // Unknown hand played
         playRound(getPlayerChoice(), getComputerChoice());
     }
 }
 
-playRound(getPlayerChoice(), getComputerChoice());
+alert(playRound(getPlayerChoice(), getComputerChoice()));
