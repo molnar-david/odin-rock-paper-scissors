@@ -27,12 +27,12 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-function game(rounds) {
-    for(let i=0; i<rounds; i++) {
-        console.log(playRound(getPlayerChoice(), getComputerChoice()));
+function game(scoreToWin) {
+    while(Math.max(playerScore, computerScore) < scoreToWin) {
+        console.log(`${playRound(getPlayerChoice(), getComputerChoice())} ${playerScore}-${computerScore}`);
     }
     if (playerScore === computerScore) {
-        console.log(`Final result: Tie ${playerScore}-${computerScore}!`)
+        console.log(`Final result: Tie ${playerScore}-${computerScore}! This shouldn't be possible...`)
     } else if(playerScore > computerScore) {
         console.log(`Final result: You win ${playerScore}-${computerScore}!`)
     } else {
