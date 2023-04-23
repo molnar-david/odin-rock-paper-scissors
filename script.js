@@ -33,10 +33,10 @@ function playRound(playerSelection, computerSelection) {
             return "Tie!";
         } else if((HAND_CHOICES.indexOf(playerSelection) + 2) % 3 === HAND_CHOICES.indexOf(computerSelection)) {
             playerScore++;
-            return `You win! ${capitalizeString(playerSelection)} beats ${computerSelection}!`;
+            return `Player wins! ${capitalizeString(playerSelection)} beats ${computerSelection}!`;
         } else if((HAND_CHOICES.indexOf(playerSelection) + 1) % 3 === HAND_CHOICES.indexOf(computerSelection)) {
             computerScore++;
-            return `You lose! ${capitalizeString(computerSelection)} beats ${playerSelection}!`;
+            return `Computer wins! ${capitalizeString(computerSelection)} beats ${playerSelection}!`;
         }
     }
 }
@@ -50,13 +50,13 @@ function game() {
 
     if (Math.max(playerScore, computerScore) === scoreToWin) {
         const finalResult = document.createElement("div");
-        
+
         if (playerScore === computerScore) {
-            finalResult.textContent += `Game Over! Tie ${playerScore}-${computerScore}! This shouldn't be possible...`;
+            finalResult.textContent += `Game over! Tie ${playerScore}-${computerScore}! This shouldn't be possible...`;
         } else if(playerScore > computerScore) {
-            finalResult.textContent += `Game Over! You win ${playerScore}-${computerScore}!`;
+            finalResult.textContent += `Game over! Player wins ${playerScore}-${computerScore}!`;
         } else {
-            finalResult.textContent += `Game Over! You lose ${playerScore}-${computerScore}!`;
+            finalResult.textContent += `Game over! Computer wins ${playerScore}-${computerScore}!`;
         }
 
         finalResult.setAttribute("id", "final-result");
