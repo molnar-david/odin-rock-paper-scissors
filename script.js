@@ -1,9 +1,19 @@
 const HAND_CHOICES = ["rock", "paper", "scissors"];
+const scoreToWin = 5;
 let playerScore = 0;
 let computerScore = 0;
+let playerChoice;
+
+const inputs = document.querySelectorAll("input");
+inputs.forEach((i) => {
+    i.addEventListener("click", (e) => {
+        playerChoice = e.target.getAttribute("class");
+        game();
+    })
+});
 
 function getPlayerChoice() {
-    return prompt("Play your hand!").toLowerCase();
+    return playerChoice;
 }
 
 function getComputerChoice() {
@@ -21,23 +31,21 @@ function playRound(playerSelection, computerSelection) {
             computerScore++;
             return `You lose! ${computerSelection} beats ${playerSelection}!`;
         }
-    } else {
-        // Unknown hand played
-        return playRound(getPlayerChoice(), getComputerChoice());
     }
 }
 
-function game(scoreToWin) {
-    while(Math.max(playerScore, computerScore) < scoreToWin) {
+function game() {
+    if (Math.max(playerScore, computerScore) < scoreToWin) {
         console.log(`${playRound(getPlayerChoice(), getComputerChoice())} ${playerScore}-${computerScore}`);
     }
-    if (playerScore === computerScore) {
-        console.log(`Final result: Tie ${playerScore}-${computerScore}! This shouldn't be possible...`)
-    } else if(playerScore > computerScore) {
-        console.log(`Final result: You win ${playerScore}-${computerScore}!`)
-    } else {
-        console.log(`Final result: You lose ${playerScore}-${computerScore}!`)
+    
+    if (Math.max(playerScore, computerScore) >= scoreToWin) {
+        if (playerScore === computerScore) {
+            console.log(`Final result: Tie ${playerScore}-${computerScore}! This shouldn't be possible...`)
+        } else if(playerScore > computerScore) {
+            console.log(`Final result: You win ${playerScore}-${computerScore}!`)
+        } else {
+            console.log(`Final result: You lose ${playerScore}-${computerScore}!`)
+        }
     }
 }
-
-game(5);
