@@ -12,6 +12,13 @@ inputs.forEach((i) => {
     })
 });
 
+const result = document.querySelector("#result");
+
+function capitalizeString(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+// Kept for compatibility
 function getPlayerChoice() {
     return playerChoice;
 }
@@ -26,26 +33,34 @@ function playRound(playerSelection, computerSelection) {
             return "Tie!";
         } else if((HAND_CHOICES.indexOf(playerSelection) + 2) % 3 === HAND_CHOICES.indexOf(computerSelection)) {
             playerScore++;
-            return `You win! ${playerSelection} beats ${computerSelection}!`;
+            return `You win! ${capitalizeString(playerSelection)} beats ${computerSelection}!`;
         } else if((HAND_CHOICES.indexOf(playerSelection) + 1) % 3 === HAND_CHOICES.indexOf(computerSelection)) {
             computerScore++;
-            return `You lose! ${computerSelection} beats ${playerSelection}!`;
+            return `You lose! ${capitalizeString(computerSelection)} beats ${playerSelection}!`;
         }
     }
 }
 
 function game() {
-    if (Math.max(playerScore, computerScore) < scoreToWin) {
-        console.log(`${playRound(getPlayerChoice(), getComputerChoice())} ${playerScore}-${computerScore}`);
+    if (Math.max(playerScore, computerScore) === scoreToWin) {
+        return;
+    } else {
+        result.textContent = `${playRound(getPlayerChoice(), getComputerChoice())} ${playerScore}-${computerScore}`;
     }
-    
-    if (Math.max(playerScore, computerScore) >= scoreToWin) {
+
+    if (Math.max(playerScore, computerScore) === scoreToWin) {
+        const finalResult = document.createElement("div");
+        
         if (playerScore === computerScore) {
-            console.log(`Final result: Tie ${playerScore}-${computerScore}! This shouldn't be possible...`)
+            finalResult.textContent += `Game Over! Tie ${playerScore}-${computerScore}! This shouldn't be possible...`;
         } else if(playerScore > computerScore) {
-            console.log(`Final result: You win ${playerScore}-${computerScore}!`)
+            finalResult.textContent += `Game Over! You win ${playerScore}-${computerScore}!`;
         } else {
-            console.log(`Final result: You lose ${playerScore}-${computerScore}!`)
+            finalResult.textContent += `Game Over! You lose ${playerScore}-${computerScore}!`;
         }
-    }
+
+        finalResult.setAttribute("id", "final-result");
+        const container = document.querySelector("#container");
+        container.appendChild(finalResult);
+    } 
 }
